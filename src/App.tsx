@@ -1,11 +1,11 @@
-import { ThemeToggler } from "./ThemeToggler"
+import { Header } from "./components/Header"
 
 
 export const App = () => {
   
   return (
     <>
-    <ThemeToggler/>
+    <Header/>
     </>
   )
 }
