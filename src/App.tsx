@@ -1,11 +1,10 @@
-import { Header } from "./components/Header"
-
+import { Box } from '@chakra-ui/react';
+import { Header } from './components/Header';
 
 export const App = () => {
-  
-  return (
-    <>
-    <Header/>
-    </>
-  )
-}
+    return (
+        <Box>
+            <Header />
+        </Box>
+    );
+};
