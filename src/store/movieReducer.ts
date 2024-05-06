@@ -1,4 +1,5 @@
-import { buildCreateSlice, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { fetchMovieById } from './asyncMoviesRequest';
 
 export interface IMovie {
     id: string | number;
@@ -10,13 +11,25 @@ export interface IMovie {
     };
 }
 
-const initialState: IMovie[] = [];
+type IState = {
+    movies: IMovie[];
+};
+const initialState: IState = {
+    movies: [],
+};
 
-export const movieReducer = createSlice({
+const movieReducer = createSlice({
     name: 'movies',
     initialState,
-    reducers:{},
-    extraReducers:{buildCreateSlice}
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(
+            fetchMovieById.fulfilled,
+            (state, action: PayloadAction<IMovie>) => {
+                state.movies.push(action.payload);
+            }
+        );
     },
 });
 
+export default movieReducer.reducer;
