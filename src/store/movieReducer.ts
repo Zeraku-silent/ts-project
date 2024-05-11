@@ -25,8 +25,8 @@ const movieReducer = createSlice({
     extraReducers: (builder) => {
         builder.addCase(
             fetchMovieById.fulfilled,
-            (state, action: PayloadAction<IMovie>) => {
-                state.movies.push(action.payload);
+            (state, action: PayloadAction<IMovie[]>) => {
+                state.movies = action.payload;
             }
         );
     },

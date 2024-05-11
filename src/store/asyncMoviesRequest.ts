@@ -17,15 +17,17 @@ const options = {
     },
 };
 
-export const fetchMovieById = createAsyncThunk<IMovie, number>(
+export const fetchMovieById = createAsyncThunk<IMovie[]>(
     'movies/fetchMovieById',
-    async (id: number) => {
+    async () => {
         const response = await fetch(
-            `https://api.kinopoisk.dev/v1.4/movie/${id}`,
+            `https://api.kinopoisk.dev/v1.4/movie?pages=1-2&limit=50`,
             options
         );
-        const data: IMovie = await response.json();
+        const data = await response.json();
+        const movies: IMovie[] = data.docs;
+        // console.log(movies);
 
-        return data;
+        return movies;
     }
 );
