@@ -4,6 +4,7 @@ import { fetchMovieById } from './asyncMoviesRequest';
 export interface IMovie {
     id: string | number;
     name: string;
+    alternativeName?: string;
     year: number;
     poster: {
         url: string;

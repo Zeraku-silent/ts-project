@@ -10,6 +10,9 @@ interface IMovie {
     };
 }
 
+const url =
+    'https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10&type=movie&year=2000-2008&rating.kp=8-10&genres.name=%D0%BA%D0%BE%D0%BC%D0%B5%D0%B4%D0%B8%D1%8F&countries.name=%D0%A1%D0%A8%D0%90';
+
 const options = {
     headers: {
         accept: 'application/json',
@@ -20,10 +23,7 @@ const options = {
 export const fetchMovieById = createAsyncThunk<IMovie[]>(
     'movies/fetchMovieById',
     async () => {
-        const response = await fetch(
-            `https://api.kinopoisk.dev/v1.4/movie?pages=1-2&limit=50`,
-            options
-        );
+        const response = await fetch(url, options);
         const data = await response.json();
         const movies: IMovie[] = data.docs;
         // console.log(movies);

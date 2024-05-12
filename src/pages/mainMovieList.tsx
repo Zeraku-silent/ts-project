@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Image } from '@chakra-ui/react';
 import { FC, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hook';
 import { fetchMovieById } from '../store/asyncMoviesRequest';
@@ -18,8 +18,8 @@ export const MainMovieList: FC = () => {
                     ? movies.movies.map((movie) => (
                           <Box key={movie.id}>
                               {/* {movie.year} */}
-                              {movie.name}
-                              {/* <Image h={'500'} src={`${movie.poster.url}`} /> */}
+                              {movie.name ? movie.name : movie.alternativeName}
+                              <Image h={'500'} src={`${movie.poster.url}`} />
                           </Box>
                       ))
                     : 'no'}
