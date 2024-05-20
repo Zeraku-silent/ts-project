@@ -20,8 +20,8 @@ export const moviesApi = createApi({
     }),
     endpoints: (builder) => ({
         getMovies: builder.query<IMovieFetch, string>({
-            query: () =>
-                '/movie?page=1&limit=10&selectFields=name&selectFields=poster&selectFields=year&selectFields=type&selectFields=rating&selectFields=genres&selectFields=id&notNullFields=name&notNullFields=id&type=movie&year=2023&rating.imdb=8-10&genres.name=%D0%B1%D0%BE%D0%B5%D0%B2%D0%B8%D0%BA',
+            query: (genresName) =>
+                `/movie?page=1&limit=10&selectFields=name&selectFields=poster&selectFields=year&selectFields=type&selectFields=rating&selectFields=genres&selectFields=id&notNullFields=name&notNullFields=id&notNullFields=poster.url&year=2012&rating.imdb=7-10&genres.name=${genresName}`,
         }),
     }),
 });

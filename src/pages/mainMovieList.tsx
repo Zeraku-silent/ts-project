@@ -3,45 +3,19 @@ import { FC } from 'react';
 // import { useAppDispatch } from '../store/hook';
 // import { fetchMovieById } from '../store/asyncMoviesRequest';
 import { useGetMoviesQuery } from '../store/api/api';
+import { GenresList } from '../components/genresList';
 
 export const MainMovieList: FC = () => {
-    // const movies = useAppSelector((state) => state.movies);
-    // const dispatch = useAppDispatch();
-
-    // useEffect(() => {
-    //     dispatch(fetchMovieById());
-    // }, [dispatch]);
-    const { data, error, isLoading } = useGetMoviesQuery('');
-    console.log(data?.docs);
-    const movies = data?.docs;
+    const { data, error, isLoading } = useGetMoviesQuery('комедия');
+    const genres = ['боевик', 'комедия', 'мультфильм'];
+    console.log(isLoading);
+    console.log(error);
 
     return (
-        <Box m={' auto'} w={'60%'} alignItems={'center'}>
-            {error ? (
-                <>Oh no, there was an error</>
-            ) : isLoading ? (
-                <Spinner />
-            ) : movies ? (
-                <Flex mt={10} wrap={'wrap'} justify={'space-between'} gap={10}>
-                    {movies.map((movie) => (
-                        <Card key={movie.id}>
-                            <Text w={40} textOverflow={'ellipsis'}>
-                                {' '}
-                                {movie.name
-                                    ? movie.name
-                                    : movie.alternativeName}
-                            </Text>
-                            <Image
-                                minW={40}
-                                maxW={40}
-                                minH={60}
-                                maxH={60}
-                                src={`${movie.poster.url}`}
-                            />
-                        </Card>
-                    ))}
-                </Flex>
-            ) : null}
+        <Box m={' auto'} alignItems={'center'}>
+            {genres.map((genre) => (
+                <GenresList key={genre} genre={genre} />
+            ))}
         </Box>
     );
 };
