@@ -1,20 +1,55 @@
-import { Box, Card, Flex, Image, Spinner, Text } from '@chakra-ui/react';
-import { FC } from 'react';
-// import { useAppDispatch } from '../store/hook';
-// import { fetchMovieById } from '../store/asyncMoviesRequest';
-import { useGetMoviesQuery } from '../store/api/api';
+import { Box } from '@chakra-ui/react';
+import { FC, useEffect, useState } from 'react';
+import genresList from '../store/api/genresList.json';
+
 import { GenresList } from '../components/genresList';
 
+const itemsOnPage = 3;
+
+const fetchMoreData = (page: number) => {
+    const arr = [];
+    for (let i = 0; i < itemsOnPage; i++) {
+        const idx = page * 3 + i;
+
+        if (idx >= genresList.length) {
+            break;
+        } else {
+            arr.push(genresList[idx]?.name);
+        }
+    }
+
+    return arr;
+};
+
 export const MainMovieList: FC = () => {
-    const { data, error, isLoading } = useGetMoviesQuery('комедия');
-    const genres = ['боевик', 'комедия', 'мультфильм'];
-    console.log(isLoading);
-    console.log(error);
+    const [genres, setGenres] = useState(['аниме', 'биография', 'боевик']);
+    const [page, setPage] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (
+                document.documentElement.offsetHeight -
+                    (window.innerHeight + document.documentElement.scrollTop) <
+                100
+            ) {
+                const newGenres = fetchMoreData(page + 1);
+                setGenres((genres) => [...genres, ...newGenres]);
+                console.log(genres.length);
+
+                setPage(page + 1);
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [genres, page]);
 
     return (
         <Box m={' auto'} alignItems={'center'}>
             {genres.map((genre) => (
-                <GenresList key={genre} genre={genre} />
+                <Box key={genre} h={400}>
+                    {' '}
+                    <GenresList genre={genre} />
+                </Box>
             ))}
         </Box>
     );

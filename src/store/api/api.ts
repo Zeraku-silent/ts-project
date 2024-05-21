@@ -9,6 +9,9 @@ type IMovieFetch = {
     pages: number;
 };
 
+const getMoviesQuery = (genresName: string) =>
+    `/movie?page=1&limit=10&selectFields=name&selectFields=poster&selectFields=year&selectFields=type&selectFields=rating&selectFields=genres&selectFields=id&notNullFields=name&notNullFields=id&notNullFields=poster.url&year=2012&rating.imdb=7-10&genres.name=${genresName}`;
+
 export const moviesApi = createApi({
     reducerPath: 'moviesApi',
     baseQuery: fetchBaseQuery({
@@ -20,8 +23,7 @@ export const moviesApi = createApi({
     }),
     endpoints: (builder) => ({
         getMovies: builder.query<IMovieFetch, string>({
-            query: (genresName) =>
-                `/movie?page=1&limit=10&selectFields=name&selectFields=poster&selectFields=year&selectFields=type&selectFields=rating&selectFields=genres&selectFields=id&notNullFields=name&notNullFields=id&notNullFields=poster.url&year=2012&rating.imdb=7-10&genres.name=${genresName}`,
+            query: getMoviesQuery,
         }),
     }),
 });

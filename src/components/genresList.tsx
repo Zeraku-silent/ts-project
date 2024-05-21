@@ -10,19 +10,22 @@ interface IProps {
 export const GenresList: FC<IProps> = ({ genre }) => {
     const { data, isLoading, isError } = useGetMoviesQuery(genre);
     const movies = data?.docs;
+
+    if (isError) {
+        return <Heading> Произошла ошибка</Heading>;
+    }
+    if (isLoading) {
+        return <Spinner />;
+    }
     return (
         <Box>
             <Heading>{genre.toUpperCase()}</Heading>
             <Flex mb={5} gap={3}>
-                {isError ? (
-                    <Heading> Произошла ошибка</Heading>
-                ) : isLoading ? (
-                    <Spinner />
-                ) : movies ? (
-                    movies.map((movie) => (
-                        <FilmCard key={movie.id} film={movie} />
-                    ))
-                ) : null}
+                {movies
+                    ? movies.map((movie) => (
+                          <FilmCard key={movie.id} film={movie} />
+                      ))
+                    : null}
             </Flex>
         </Box>
     );
