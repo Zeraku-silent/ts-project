@@ -34,7 +34,6 @@ export const MainMovieList: FC = () => {
             ) {
                 const newGenres = fetchMoreData(page + 1);
                 setGenres((genres) => [...genres, ...newGenres]);
-                console.log(genres.length);
 
                 setPage(page + 1);
             }
@@ -45,12 +44,12 @@ export const MainMovieList: FC = () => {
 
     return (
         <Box m={' auto'} alignItems={'center'}>
-            {genres.map((genre) => (
+            {/* {genres.map((genre) => (
                 <Box key={genre} h={400}>
                     {' '}
                     <GenresList genre={genre} />
                 </Box>
-            ))}
+            ))} */}
         </Box>
     );
 };
