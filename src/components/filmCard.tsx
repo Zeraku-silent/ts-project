@@ -1,11 +1,21 @@
-import { Card, CardBody, CardHeader, Image, Text } from '@chakra-ui/react';
+import {
+    Button,
+    Card,
+    CardBody,
+    CardHeader,
+    Image,
+    Text,
+} from '@chakra-ui/react';
 import { FC } from 'react';
 import { IMovie } from '../store/movieReducer';
+import { Link } from 'react-router-dom';
 interface IProps {
     film: IMovie;
 }
 
 export const FilmCard: FC<IProps> = ({ film }) => {
+    console.log(film.id);
+
     return (
         <Card w={60}>
             <CardHeader>
@@ -14,6 +24,9 @@ export const FilmCard: FC<IProps> = ({ film }) => {
             <CardBody textAlign={'center'}>
                 <Text>{film.name}</Text>
             </CardBody>
+            <Button>
+                <Link to={'/movie/' + film.id}>Подробнее...</Link>
+            </Button>
         </Card>
     );
 };

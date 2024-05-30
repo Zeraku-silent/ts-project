@@ -20,7 +20,7 @@ export const GenresList: FC<IProps> = ({ genre }) => {
     return (
         <Box>
             <Heading>{genre.toUpperCase()}</Heading>
-            <Flex mb={5} gap={3}>
+            <Flex mb={5} justify={'space-evenly'} gap={5}>
                 {movies
                     ? movies.map((movie) => (
                           <FilmCard key={movie.id} film={movie} />
