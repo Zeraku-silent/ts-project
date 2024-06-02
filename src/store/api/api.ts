@@ -25,7 +25,10 @@ export const moviesApi = createApi({
         getMovies: builder.query<IMovieFetch, string>({
             query: getMoviesQuery,
         }),
+        getOneMovieById: builder.query({
+            query: (id: number | string) => `movie/${id}`,
+        }),
     }),
 });
 
-export const { useGetMoviesQuery } = moviesApi;
+export const { useGetMoviesQuery, useGetOneMovieByIdQuery } = moviesApi;

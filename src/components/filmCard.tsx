@@ -14,8 +14,6 @@ interface IProps {
 }
 
 export const FilmCard: FC<IProps> = ({ film }) => {
-    console.log(film.id);
-
     return (
         <Card w={60}>
             <CardHeader>
