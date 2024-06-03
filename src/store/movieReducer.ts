@@ -10,7 +10,22 @@ export interface IMovie {
         url: string;
         previewUrl: string;
     };
+    description: string;
+    ageRating: number | null;
+    genres: [
+        {
+            name: string;
+        }
+    ];
 }
+
+type IMovieFetch = {
+    docs: IMovie[];
+    total: number;
+    limit: number;
+    page: number;
+    pages: number;
+};
 
 type IState = {
     movies: IMovie[];

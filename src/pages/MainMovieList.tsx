@@ -1,7 +1,9 @@
 import { Box } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
 import genresList from '../store/api/genresList.json';
-import { GenresList } from '../components/genresList';
+import { GenresList } from '../components/GenresList';
+import { useAppDispatch } from '../store/hook';
+import { fetchMovies } from '../store/moviesSlice/moviesSlice';
 
 const itemsOnPage = 3;
 
@@ -24,6 +26,7 @@ export const MainMovieList: FC = () => {
     // , 'биография', 'боевик'
     const [genres, setGenres] = useState(['аниме']);
     const [page, setPage] = useState(0);
+    const dispatch = useAppDispatch();
 
     // useEffect(() => {
     //     const handleScroll = () => {
@@ -41,6 +44,11 @@ export const MainMovieList: FC = () => {
     //     window.addEventListener('scroll', handleScroll);
     //     return () => window.removeEventListener('scroll', handleScroll);
     // }, [genres, page]);
+
+    useEffect(() => {
+        dispatch(fetchMovies('аниме'));
+        console.log(import.meta.env.API_KEY);
+    }, [dispatch]);
 
     return (
         <Box m={' auto'} alignItems={'center'}>

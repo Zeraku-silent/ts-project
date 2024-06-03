@@ -1,7 +1,7 @@
 import { Box, Flex, Heading, Spinner } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useGetMoviesQuery } from '../store/api/api';
-import { FilmCard } from './filmCard';
+import { FilmCard } from './FilmCard';
 
 interface IProps {
     genre: string;
