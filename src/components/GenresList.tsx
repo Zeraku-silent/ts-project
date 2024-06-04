@@ -1,20 +1,33 @@
 import { Box, Flex, Heading, Spinner } from '@chakra-ui/react';
-import { FC } from 'react';
-import { useGetMoviesQuery } from '../store/api/api';
+import { FC, useEffect } from 'react';
 import { FilmCard } from './FilmCard';
+import { useAppDispatch, useAppSelector } from '../store/hook';
+import {
+    fetchMovies,
+    selectMovies,
+    selectStatus,
+} from '../store/moviesSlice/moviesSlice';
+import { STATUS } from '../config/statuses';
 
 interface IProps {
     genre: string;
 }
 
 export const GenresList: FC<IProps> = ({ genre }) => {
-    const { data, isLoading, isError } = useGetMoviesQuery(genre);
-    const movies = data?.docs;
+    const movies = useAppSelector(selectMovies);
+    const status = useAppSelector(selectStatus);
 
-    if (isError) {
-        return <Heading> Произошла ошибка</Heading>;
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(fetchMovies(genre));
+        console.log(genre);
+    }, [dispatch, genre]);
+
+    if (status === STATUS.ERROR) {
+        return <Heading> Фильмы украли пираты</Heading>;
     }
-    if (isLoading) {
+    if (status === STATUS.PENDING) {
         return <Spinner />;
     }
     return (

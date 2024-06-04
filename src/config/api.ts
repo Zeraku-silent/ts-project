@@ -9,3 +9,6 @@ export const client = axios.create({
         'Access-Control-Allow-Origin': '*',
     },
 });
+
+// const keyOfKiruha = 'A5V3KDH-QQ1M6J1-MQFKEQ6-STQVYJQ';
+// const moiKey = '2KYD7FF-JY4M4PZ-Q0HD2BT-SG468KD';

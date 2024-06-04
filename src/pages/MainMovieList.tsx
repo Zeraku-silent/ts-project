@@ -7,48 +7,42 @@ import { fetchMovies } from '../store/moviesSlice/moviesSlice';
 
 const itemsOnPage = 3;
 
-// const fetchMoreData = (page: number) => {
-//     const arr = [];
-//     for (let i = 0; i < itemsOnPage; i++) {
-//         const idx = page * 3 + i;
+const fetchMoreData = (page: number) => {
+    const arr = [];
+    for (let i = 0; i < itemsOnPage; i++) {
+        const idx = page * 3 + i;
 
-//         if (idx >= genresList.length) {
-//             break;
-//         } else {
-//             arr.push(genresList[idx]?.name);
-//         }
-//     }
+        if (idx >= genresList.length) {
+            break;
+        } else {
+            arr.push(genresList[idx]?.name);
+        }
+    }
 
-//     return arr;
-// };
+    return arr;
+};
 
 export const MainMovieList: FC = () => {
     // , 'биография', 'боевик'
-    const [genres, setGenres] = useState(['аниме']);
+    const [genres, setGenres] = useState(['аниме', 'биография', 'боевик']);
     const [page, setPage] = useState(0);
-    const dispatch = useAppDispatch();
-
-    // useEffect(() => {
-    //     const handleScroll = () => {
-    //         if (
-    //             document.documentElement.offsetHeight -
-    //                 (window.innerHeight + document.documentElement.scrollTop) <
-    //             100
-    //         ) {
-    //             const newGenres = fetchMoreData(page + 1);
-    //             setGenres((genres) => [...genres, ...newGenres]);
-
-    //             setPage(page + 1);
-    //         }
-    //     };
-    //     window.addEventListener('scroll', handleScroll);
-    //     return () => window.removeEventListener('scroll', handleScroll);
-    // }, [genres, page]);
 
     useEffect(() => {
-        dispatch(fetchMovies('аниме'));
-        console.log(import.meta.env.API_KEY);
-    }, [dispatch]);
+        const handleScroll = () => {
+            if (
+                document.documentElement.offsetHeight -
+                    (window.innerHeight + document.documentElement.scrollTop) <
+                100
+            ) {
+                const newGenres = fetchMoreData(page + 1);
+                setGenres((genres) => [...genres, ...newGenres]);
+
+                setPage(page + 1);
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [genres, page]);
 
     return (
         <Box m={' auto'} alignItems={'center'}>
