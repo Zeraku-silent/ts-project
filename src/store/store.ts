@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import moviesSlice from './moviesSlice/moviesSlice';
+import testEntitySlice from './testEntitySlice/entityAdpaterSlice';
 
 export const store = configureStore({
     reducer: {
         movies: moviesSlice,
+        todos: testEntitySlice,
         // [moviesApi.reducerPath]: moviesApi.reducer,
     },
 });

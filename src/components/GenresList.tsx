@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, Spinner } from '@chakra-ui/react';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { FilmCard } from './FilmCard';
 import { useAppDispatch, useAppSelector } from '../store/hook';
 import {
@@ -8,6 +8,7 @@ import {
     selectStatus,
 } from '../store/moviesSlice/moviesSlice';
 import { STATUS } from '../config/statuses';
+import { IMovie } from '../models/movie';
 
 interface IProps {
     genre: string;
@@ -19,10 +20,9 @@ export const GenresList: FC<IProps> = ({ genre }) => {
 
     const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        dispatch(fetchMovies(genre));
-        console.log(genre);
-    }, [dispatch, genre]);
+    // useEffect(() => {
+    //     dispatch(fetchMovies(genre));
+    // }, [dispatch, genre]);
 
     if (status === STATUS.ERROR) {
         return <Heading> Фильмы украли пираты</Heading>;
@@ -35,9 +35,11 @@ export const GenresList: FC<IProps> = ({ genre }) => {
             <Heading>{genre.toUpperCase()}</Heading>
             <Flex mb={5} justify={'space-evenly'} gap={5}>
                 {movies
-                    ? movies.map((movie) => (
-                          <FilmCard key={movie.id} film={movie} />
-                      ))
+                    ? movies.map((movie) =>
+                          movie.genres.includes({ name: genre }) ? (
+                              <FilmCard key={movie.id} film={movie} />
+                          ) : null
+                      )
                     : null}
             </Flex>
         </Box>

@@ -2,8 +2,13 @@ import { Box } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
 import genresList from '../store/api/genresList.json';
 import { GenresList } from '../components/GenresList';
-import { useAppDispatch } from '../store/hook';
+import { useAppDispatch, useAppSelector } from '../store/hook';
 import { fetchMovies } from '../store/moviesSlice/moviesSlice';
+import {
+    getTodos,
+    selectTodoById,
+    selectTodos,
+} from '../store/testEntitySlice/entityAdpaterSlice';
 
 const itemsOnPage = 3;
 
@@ -27,31 +32,40 @@ export const MainMovieList: FC = () => {
     const [genres, setGenres] = useState(['аниме', 'биография', 'боевик']);
     const [page, setPage] = useState(0);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            if (
-                document.documentElement.offsetHeight -
-                    (window.innerHeight + document.documentElement.scrollTop) <
-                100
-            ) {
-                const newGenres = fetchMoreData(page + 1);
-                setGenres((genres) => [...genres, ...newGenres]);
+    const dispatch = useAppDispatch();
+    const todos = useAppSelector(selectTodos);
+    const oneTodo = useAppSelector((state) => selectTodoById(state, 67));
 
-                setPage(page + 1);
-            }
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [genres, page]);
+    useEffect(() => {
+        dispatch(getTodos());
+    }, [dispatch]);
+    console.log(oneTodo);
+
+    // useEffect(() => {
+    //     const handleScroll = () => {
+    //         if (
+    //             document.documentElement.offsetHeight -
+    //                 (window.innerHeight + document.documentElement.scrollTop) <
+    //             100
+    //         ) {
+    //             const newGenres = fetchMoreData(page + 1);
+    //             setGenres((genres) => [...genres, ...newGenres]);
+
+    //             setPage(page + 1);
+    //         }
+    //     };
+    //     window.addEventListener('scroll', handleScroll);
+    //     return () => window.removeEventListener('scroll', handleScroll);
+    // }, [genres, page]);
 
     return (
         <Box m={' auto'} alignItems={'center'}>
-            {genres.map((genre) => (
+            {/* {genres.map((genre) => (
                 <Box key={genre} h={400}>
                     {' '}
                     <GenresList genre={genre} />
                 </Box>
-            ))}
+            ))} */}
         </Box>
     );
 };
